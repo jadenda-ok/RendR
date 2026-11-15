@@ -12,6 +12,7 @@ permissions:
 jobs:
   deploy:
     runs-on: windows-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
 
@@ -22,16 +23,27 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Rebuild v1.1.0 release (delete + fresh republish)
+      - name: Remove existing v1.1.0 release (if any)
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          REL_ID=$(curl -s https://api.github.com/repos/jadenda-ok/RendR/releases/tags/v1.1.0 | grep -o '"id": [0-9]*' | head -1 | grep -o '[0-9]*' || true)
+          REL_ID=$(gh api repos/jadenda-ok/RendR/releases/tags/v1.1.0 --jq '.id' 2>/dev/null || echo "")
           if [ -n "$REL_ID" ]; then
-            curl -s -X DELETE -H "Authorization: token $GH_TOKEN" "https://api.github.com/repos/jadenda-ok/RendR/releases/$REL_ID" -o /dev/null
+            gh api -X DELETE "repos/jadenda-ok/RendR/releases/$REL_ID" >/dev/null 2>&1 || true
           fi
-          npx electron-builder --win nsis --publish always
+
+      - name: Publish NSIS release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx electron-builder --win nsis --publish always
+
+      - name: Build portable and attach
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
           npx electron-builder --win portable --publish never
           gh release upload v1.1.0 release/Rendr-Portable-*.exe --clobber
 
@@ -76,17 +88,19 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          curl -s -X PUT -H "Authorization: token $GH_TOKEN" -H "Accept: application/vnd.github+json" \
-            https://api.github.com/repos/jadenda-ok/RendR/pages \
-            -d '{"source":{"branch":"gh-pages","path":"/"}}' | head -c 400
+          gh api -X PUT repos/jadenda-ok/RendR/pages \
+            -f source[branch]=gh-pages -f source[path]=/ >/dev/null 2>&1 || true
 
       - name: Wait for Pages build
         shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           for i in $(seq 1 24); do
-            ST=$(curl -s https://api.github.com/repos/jadenda-ok/RendR/pages | grep -o '"status": "[^"]*"' | head -1)
-            echo "pages $ST"
-            echo "$ST" | grep -q 'built' && exit 0
+            ST=$(gh api repos/jadenda-ok/RendR/pages --jq '.status' 2>/dev/null || echo "none")
+            echo "pages status: $ST"
+            [ "$ST" = "built" ] && exit 0
             sleep 15
           done
+          echo "Pages did not finish building in time"
           exit 1
