@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'" />
+  <title>Rendr Overlay</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: transparent;
+    }
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+    #fps-box {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      padding: 5px 12px;
+      font: 600 12.5px/1.4 Consolas, 'Cascadia Mono', monospace;
+      color: #ececf0;
+      background: rgba(10, 10, 12, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 999px;
+      letter-spacing: 0.5px;
+      pointer-events: none;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+    }
+    #fps-box[hidden] { display: none; }
+  </style>
+</head>
+<body>
+  <canvas id="surface"></canvas>
+  <div id="fps-box" hidden></div>
+  <script src="../shared/engine.js"></script>
+  <script src="overlay.js"></script>
+</body>
+</html>

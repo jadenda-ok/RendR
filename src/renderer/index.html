@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'" />
+  <title>rendr</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="titlebar">
+    <div class="tb-brand">
+      <img src="logo.png" class="tb-logo" alt="" />
+      <span class="tb-word">Rendr</span>
+    </div>
+    <nav id="tb-tabs">
+      <button class="tb-tab active" data-section="home" title="Home">
+        <svg viewBox="0 0 24 24" width="19" height="19"><path d="M3 10.5L12 3l9 7.5M5 9.5V21h5v-6h4v6h5V9.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="tb-tab" data-section="crosshair" title="Crosshair">
+        <svg viewBox="0 0 24 24" width="19" height="19"><path d="M12 3v5M12 16v5M3 12h5M16 12h5M9 9l2.1 2.1M14.9 14.9L17 17M15 9l-2.1 2.1M9.1 14.9L7 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/></svg>
+      </button>
+      <button class="tb-tab" data-section="fflags" title="FastFlags">
+        <svg viewBox="0 0 24 24" width="19" height="19"><path d="M4 17l6-6-6-6M12 19h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+      </button>
+      <button class="tb-tab" data-section="settings" title="Settings">
+        <svg viewBox="0 0 24 24" width="19" height="19"><circle cx="12" cy="12" r="3.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M19.4 15a1.7 1.7 0 00.34 1.87l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.7 1.7 0 00-1.87-.34 1.7 1.7 0 00-1.03 1.56V21a2 2 0 11-4 0v-.09a1.7 1.7 0 00-1.03-1.56 1.7 1.7 0 00-1.87.34l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.7 1.7 0 004.6 15a1.7 1.7 0 00-1.56-1.03H3a2 2 0 110-4h.09A1.7 1.7 0 004.65 8.94a1.7 1.7 0 00-.34-1.87l-.06-.06a2 2 0 112.83-2.83l.06.06a1.7 1.7 0 001.87.34H9a1.7 1.7 0 001.03-1.56V3a2 2 0 114 0v.09c0 .68.4 1.3 1.03 1.56a1.7 1.7 0 001.87-.34l.06-.06a2 2 0 112.83 2.83l-.06.06a1.7 1.7 0 00-.34 1.87V9c.26.63.88 1.03 1.56 1.03H21a2 2 0 110 4h-.09a1.7 1.7 0 00-1.51 1.03z" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
+      </button>
+    </nav>
+    <div class="tb-controls">
+      <button id="tb-min" title="Minimize"><svg viewBox="0 0 12 12" width="12" height="12"><path d="M1 6h10" stroke="currentColor" stroke-width="1.4"/></svg></button>
+      <button id="tb-max" title="Maximize"><svg viewBox="0 0 12 12" width="12" height="12"><rect x="1.5" y="1.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></button>
+      <button id="tb-close" class="tb-close" title="Close"><svg viewBox="0 0 12 12" width="12" height="12"><path d="M2 2l8 8M10 2l-8 8" stroke="currentColor" stroke-width="1.4"/></svg></button>
+    </div>
+  </div>
+
+  <div id="app">
+    <aside id="sidebar">
+      <div class="sb-head">
+        <span class="sb-title" id="sb-section-title">Home</span>
+        <button class="icon-btn" id="sb-collapse" title="Collapse sidebar">
+          <svg viewBox="0 0 24 24" width="15" height="15"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+      <nav id="sb-nav"></nav>
+      <div class="sb-links-head">Resources</div>
+      <div class="sb-links" id="sb-links"></div>
+      <div class="sb-spacer"></div>
+      <div class="sb-chip" id="sb-chip" title="Toggle the overlay">
+        <canvas id="sb-chip-canvas" width="44" height="44"></canvas>
+        <div class="sb-chip-info">
+          <div class="sb-chip-name" id="sb-chip-name">Overlay on</div>
+          <div class="sb-chip-sub" id="sb-chip-sub">Ctrl+Alt+X</div>
+        </div>
+        <label class="switch"><input type="checkbox" id="sb-chip-switch" /><span class="slider"></span></label>
+      </div>
+    </aside>
+
+    <main id="content">
+      <!-- ================= HOME ================= -->
+      <section class="page active" id="page-home-overview" data-page="home-overview">
+        <div class="page-head">
+          <h1>Overview</h1>
+          <p class="sub">Everything about your crosshair setup, at a glance.</p>
+        </div>
+        <div class="ov-hero card">
+          <div class="ov-hero-glow"></div>
+          <img src="logo.png" class="ov-hero-logo" alt="" />
+          <div class="ov-hero-info">
+            <div class="ov-hero-title">
+              <h2>Rendr</h2>
+              <span class="pill info" id="ov-version">v1.1.0</span>
+            </div>
+            <p class="ov-hero-desc">The crosshair studio for Roblox. Design it, overlay it, play with it.</p>
+            <div class="ov-hero-stats" id="ov-hero-stats"></div>
+          </div>
+          <div class="ov-hero-actions">
+            <button class="btn primary" id="ov-open-studio">Open Studio</button>
+            <button class="btn ghost" id="ov-check-updates">Check for Updates</button>
+          </div>
+        </div>
+        <div class="kpi-grid" id="kpi-grid"></div>
+        <div class="two-col">
+          <div class="card">
+            <div class="card-head"><span>QUICK ACCESS</span></div>
+            <div id="ov-quick"></div>
+          </div>
+          <div class="card">
+            <div class="card-head"><span>WHAT'S NEW</span></div>
+            <div id="ov-news"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" id="page-home-updates" data-page="home-updates">
+        <div class="page-head">
+          <h1>Update Log</h1>
+          <p class="sub">What changed in every Rendr release.</p>
+        </div>
+        <div class="card upd-status-card">
+          <div class="card-head"><span>UPDATE STATUS</span></div>
+          <div class="upd-row">
+            <div>
+              <div class="set-title" id="upd-status-text">Idle</div>
+              <div class="set-desc" id="upd-status-sub">Rendr checks for updates automatically in installed builds.</div>
+            </div>
+            <div class="upd-actions">
+              <button class="btn ghost" id="btn-check-updates">Check Now</button>
+              <button class="btn primary" id="btn-install-update" style="display:none">Install &amp; Restart</button>
+            </div>
+          </div>
+          <div id="upd-progress" class="progress" style="display:none"><div class="progress-fill" id="upd-progress-fill"></div></div>
+        </div>
+        <div id="upd-log"></div>
+      </section>
+
+      <section class="page" id="page-home-about" data-page="home-about">
+        <div class="page-head">
+          <h1>About</h1>
+          <p class="sub">What Rendr is — and what it isn't.</p>
+        </div>
+        <div class="about-hero card">
+          <img src="logo.png" class="about-logo" alt="" />
+          <h1>Rendr</h1>
+          <p class="sub" id="about-version">v1.1.0</p>
+          <p class="about-desc">
+            A crosshair overlay studio and FastFlags manager for Roblox. Design unlimited custom
+            crosshairs with layers, colors, glow, animations and images — then render them on top of
+            your game. No injection, no accounts, fully local.
+          </p>
+          <div class="about-actions">
+            <button class="btn primary" id="btn-about-update">Check for Updates</button>
+            <button class="btn ghost" id="btn-about-data">Open Data Folder</button>
+          </div>
+          <p class="sub" id="about-upd-status" style="margin-top:10px"></p>
+        </div>
+        <div class="about-grid">
+          <div class="card">
+            <div class="card-head"><span>FEATURES</span></div>
+            <ul class="feature-list">
+              <li>Click-through transparent overlay — never blocks your mouse or keyboard</li>
+              <li>6 layer types: cross, dot, ring, T-sight, box, custom image</li>
+              <li>Outlines, glow, gradients, rainbow &amp; pulse/rotate animations</li>
+              <li>Profiles with JSON import/export and PNG export</li>
+              <li>Preset gallery, global hotkeys, tray control</li>
+              <li>FastFlags manager with backup/restore and custom flags</li>
+              <li>Real in-game FPS indicator (Intel PresentMon, no game-memory access)</li>
+              <li>Multi-monitor support and Roblox-aware auto show/hide</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-head"><span>DISCLAIMER</span></div>
+            <p class="disclaimer">
+              Rendr is an unofficial third-party tool and is not affiliated with, endorsed by, or
+              sponsored by Roblox Corporation. It does not inject into or modify the Roblox process —
+              the overlay is drawn in a separate window and FastFlags use Roblox's own supported
+              ClientSettings mechanism. Your data never leaves this PC.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= CROSSHAIR ================= -->
+      <section class="page" id="page-crosshair-studio" data-page="crosshair-studio">
+        <div class="page-head">
+          <h1>Crosshair Studio</h1>
+          <p class="sub">Design your crosshair layer by layer. The active crosshair renders live on top of Roblox.</p>
+        </div>
+        <div class="toolbar card sticky">
+          <select id="profile-select" class="input grow" title="Active profile"></select>
+          <button class="btn ghost" id="btn-new-profile" title="New profile">New</button>
+          <button class="btn ghost" id="btn-dup-profile" title="Duplicate profile">Duplicate</button>
+          <button class="btn ghost" id="btn-rename-profile" title="Rename profile">Rename</button>
+          <button class="btn ghost danger-text" id="btn-del-profile" title="Delete profile">Delete</button>
+          <span class="vdiv"></span>
+          <button class="btn ghost" id="btn-import-profile" title="Import profile JSON">Import</button>
+          <button class="btn ghost" id="btn-export-profile" title="Export profile JSON">Export</button>
+          <button class="btn ghost" id="btn-export-png" title="Export crosshair as PNG image">PNG</button>
+          <span class="vdiv"></span>
+          <button class="btn outline" id="btn-test-overlay" title="Show this crosshair on screen for 5 seconds">Test on Screen</button>
+        </div>
+
+        <div class="editor-grid">
+          <div class="panel card" id="layers-panel">
+            <div class="panel-head">
+              <span>LAYERS</span>
+              <span class="muted" id="layer-count"></span>
+            </div>
+            <div class="layer-adds">
+              <button class="btn mini" data-add="cross" title="Add cross lines">+ Cross</button>
+              <button class="btn mini" data-add="dot" title="Add dot">+ Dot</button>
+              <button class="btn mini" data-add="circle" title="Add circle">+ Ring</button>
+              <button class="btn mini" data-add="t" title="Add T-sight">+ T</button>
+              <button class="btn mini" data-add="square" title="Add square">+ Box</button>
+              <button class="btn mini" data-add="image" title="Add image layer">+ Image</button>
+            </div>
+            <div id="layer-list" class="layer-list"></div>
+            <div class="layer-tip muted">Select a layer to edit its properties. Use the arrows to reorder.</div>
+          </div>
+
+          <div class="panel card" id="preview-panel">
+            <div class="panel-head">
+              <span>PREVIEW</span>
+              <button class="btn mini" id="btn-bg-toggle">BG: Scene</button>
+            </div>
+            <div class="preview-wrap">
+              <canvas id="preview-canvas" width="640" height="360"></canvas>
+            </div>
+            <div class="preview-sliders">
+              <div class="prop-row">
+                <label>Pos X</label>
+                <input type="range" id="pos-x" min="0" max="100" value="50" />
+                <span class="val" id="pos-x-val">50%</span>
+              </div>
+              <div class="prop-row">
+                <label>Pos Y</label>
+                <input type="range" id="pos-y" min="0" max="100" value="50" />
+                <span class="val" id="pos-y-val">50%</span>
+              </div>
+              <div class="prop-row">
+                <label>Scale</label>
+                <input type="range" id="prof-scale" min="20" max="400" value="100" />
+                <span class="val" id="prof-scale-val">1.00x</span>
+              </div>
+              <div class="prop-row">
+                <label>Opacity</label>
+                <input type="range" id="prof-opacity" min="5" max="100" value="100" />
+                <span class="val" id="prof-opacity-val">100%</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel card" id="props-panel">
+            <div class="panel-head"><span>LAYER PROPERTIES</span></div>
+            <div id="props-body" class="props-body"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" id="page-crosshair-presets" data-page="crosshair-presets">
+        <div class="page-head">
+          <h1>Presets</h1>
+          <p class="sub">Built-in crosshairs. Click one to make it your active crosshair.</p>
+        </div>
+        <div id="preset-grid" class="gallery-grid"></div>
+      </section>
+
+      <section class="page" id="page-crosshair-profiles" data-page="crosshair-profiles">
+        <div class="page-head">
+          <h1>My Crosshairs</h1>
+          <p class="sub">Your saved crosshair profiles. The active one renders on the overlay.</p>
+        </div>
+        <div id="mine-grid" class="gallery-grid"></div>
+      </section>
+
+      <!-- ================= FASTFLAGS ================= -->
+      <section class="page" id="page-fflags-library" data-page="fflags-library">
+        <div class="page-head">
+          <h1>FastFlags Library</h1>
+          <p class="sub">Curated Roblox client flags, written to ClientAppSettings.json. Changes apply to Roblox Player and Studio.</p>
+        </div>
+        <div class="fflags-status card">
+          <div class="fflags-status-inner" id="fflags-status"></div>
+          <span class="fflags-path" id="fflags-path"></span>
+        </div>
+        <div class="toolbar card sticky">
+          <button class="btn primary" id="ff-apply" title="Write flags to Roblox">Apply</button>
+          <button class="btn outline" id="ff-apply-launch" title="Write flags and launch Roblox">Apply + Launch</button>
+          <button class="btn ghost" id="ff-launch" title="Launch Roblox Player">Launch Roblox</button>
+          <span class="vdiv"></span>
+          <button class="btn ghost" id="ff-import" title="Import flags from a .json or .txt file">Import File</button>
+          <button class="btn ghost" id="ff-export" title="Export current flags to JSON">Export</button>
+        </div>
+        <div class="toolbar card">
+          <input type="text" id="ff-search" class="input grow" placeholder="Search flags... (name or description)" />
+          <div id="ff-categories" class="chips"></div>
+        </div>
+        <div id="ff-list" class="ff-list card"></div>
+        <div class="note card">
+          <strong>What are FastFlags?</strong> FastFlags are internal client toggles Roblox ships for testing.
+          Rendr applies them by writing a <code>ClientAppSettings.json</code> file into Roblox's ClientSettings
+          folder — no injection, fully supported by the official client. If Roblox misbehaves, use Backups to restore.
+        </div>
+      </section>
+
+      <section class="page" id="page-fflags-custom" data-page="fflags-custom">
+        <div class="page-head">
+          <h1>Custom Flags</h1>
+          <p class="sub">Add your own ClientAppSettings entries — one by one or bulk-imported from a file.</p>
+        </div>
+        <div class="panel card">
+          <div class="panel-head"><span>ADD A FLAG</span></div>
+          <div class="custom-add">
+            <input type="text" id="cf-name" class="input" placeholder="Flag name (e.g. FFlagMyCustomFlag)" />
+            <select id="cf-type" class="input">
+              <option value="bool">Boolean</option>
+              <option value="int">Integer</option>
+              <option value="float">Float</option>
+              <option value="string">String</option>
+            </select>
+            <input type="text" id="cf-value" class="input" placeholder="Value (true/false, number, text)" />
+            <button class="btn outline" id="cf-add">Add Flag</button>
+            <button class="btn ghost" id="cf-import-file" title="Bulk-add custom flags from a .json or .txt file">Import .json / .txt</button>
+          </div>
+          <div id="cf-list" class="custom-list"></div>
+        </div>
+        <div class="note card">
+          <strong>Import formats.</strong> JSON files can be a flat map of <code>{ "FFlagName": true }</code> or a list of
+          <code>{ "name": ..., "value": ... }</code> objects. TXT files take one flag per line: <code>FFlagName=true</code>,
+          <code>FFlagName: 240</code>, or <code>"FFlagName" "value"</code>. Values like <code>"True"</code> are read correctly.
+        </div>
+      </section>
+
+      <section class="page" id="page-fflags-backups" data-page="fflags-backups">
+        <div class="page-head">
+          <h1>Backups</h1>
+          <p class="sub">Snapshots of ClientAppSettings.json. Restore any of them with one click.</p>
+        </div>
+        <div class="toolbar card">
+          <button class="btn primary" id="ff-backup" title="Back up current ClientAppSettings.json">Create Backup</button>
+          <button class="btn ghost" id="ff-restore" title="Restore a backup file">Restore from File...</button>
+          <button class="btn ghost" id="ff-open-folder" title="Open the ClientSettings folder">Open Folder</button>
+          <button class="btn ghost danger-text" id="ff-clear" title="Remove all Rendr-managed flags">Clear Managed</button>
+        </div>
+        <div id="ff-backups" class="ff-list card"></div>
+      </section>
+
+      <!-- ================= SETTINGS ================= -->
+      <section class="page" id="page-settings-overlay" data-page="settings-overlay">
+        <div class="page-head">
+          <h1>Overlay</h1>
+          <p class="sub">How the crosshair overlay behaves on top of Roblox.</p>
+        </div>
+        <div class="panel card">
+          <div class="set-row">
+            <div><div class="set-title">Overlay enabled</div><div class="set-desc">Show the crosshair on top of Roblox.</div></div>
+            <label class="switch"><input type="checkbox" id="set-overlay-enabled" /><span class="slider"></span></label>
+          </div>
+          <div class="set-row">
+            <div><div class="set-title">Master opacity</div><div class="set-desc">Global opacity for the whole overlay.</div></div>
+            <div class="set-control"><input type="range" id="set-master-opacity" min="10" max="100" value="100" /><span class="val" id="set-master-opacity-val">100%</span></div>
+          </div>
+          <div class="set-row">
+            <div><div class="set-title">Follow cursor monitor</div><div class="set-desc">Move the overlay to whichever monitor your mouse is on.</div></div>
+            <label class="switch"><input type="checkbox" id="set-follow-mon" /><span class="slider"></span></label>
+          </div>
+          <div class="set-row">
+            <div><div class="set-title">Only when Roblox is running</div><div class="set-desc">Hide the overlay while Roblox Player is closed.</div></div>
+            <label class="switch"><input type="checkbox" id="set-only-roblox" /><span class="slider"></span></label>
+          </div>
+          <div class="set-row">
+            <div>
+              <div class="set-title">FPS indicator <span class="pill info" id="fps-live">Off</span></div>
+              <div class="set-desc">Shows your real in-game FPS in the corner of the overlay. Uses Intel PresentMon — no game-memory access, safe with Roblox anti-cheat. The first start asks for admin approval once per session. <span class="muted" id="fps-msg"></span></div>
+            </div>
+            <div class="set-side">
+              <label class="switch"><input type="checkbox" id="set-fps" /><span class="slider"></span></label>
+              <button class="btn mini" id="btn-fps-retry" style="display:none">Retry</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" id="page-settings-hotkeys" data-page="settings-hotkeys">
+        <div class="page-head">
+          <h1>Hotkeys</h1>
+          <p class="sub">Global shortcuts that work from anywhere.</p>
+        </div>
+        <div class="panel card">
+          <div class="set-row">
+            <div><div class="set-title">Toggle overlay</div><div class="set-desc">Show or hide the crosshair from anywhere.</div></div>
+            <button class="btn ghost hotkey-btn" id="hk-toggle">Ctrl+Alt+X</button>
+          </div>
+          <div class="set-row">
+            <div><div class="set-title">Cycle crosshair</div><div class="set-desc">Switch to the next crosshair profile.</div></div>
+            <button class="btn ghost hotkey-btn" id="hk-cycle">Ctrl+Alt+C</button>
+          </div>
+          <div class="set-tip muted">Click a button, then press the key combo. Esc cancels. Use at least one modifier (Ctrl / Alt / Shift).</div>
+          <div class="set-tip" id="hk-status" style="display:none"></div>
+        </div>
+      </section>
+
+      <section class="page" id="page-settings-general" data-page="settings-general">
+        <div class="page-head">
+          <h1>General</h1>
+          <p class="sub">App behaviour on this PC.</p>
+        </div>
+        <div class="panel card">
+          <div class="set-row">
+            <div><div class="set-title">Start with Windows</div><div class="set-desc">Launch Rendr when you log in.</div></div>
+            <label class="switch"><input type="checkbox" id="set-startup" /><span class="slider"></span></label>
+          </div>
+          <div class="set-row">
+            <div><div class="set-title">Close to tray</div><div class="set-desc">Closing the window keeps the overlay running in the tray.</div></div>
+            <label class="switch"><input type="checkbox" id="set-close-tray" /><span class="slider"></span></label>
+          </div>
+          <div class="set-row">
+            <div><div class="set-title">Minimize to tray</div><div class="set-desc">Minimizing hides the window to the tray instead.</div></div>
+            <label class="switch"><input type="checkbox" id="set-min-tray" /><span class="slider"></span></label>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" id="page-settings-updates" data-page="settings-updates">
+        <div class="page-head">
+          <h1>Updates</h1>
+          <p class="sub">Rendr keeps itself up to date automatically.</p>
+        </div>
+        <div class="panel card">
+          <div class="set-row">
+            <div>
+              <div class="set-title">Check for updates</div>
+              <div class="set-desc" id="update-status">Checks the feed baked into the build.</div>
+            </div>
+            <div class="upd-actions">
+              <button class="btn ghost" id="btn-check-updates-set">Check Now</button>
+              <button class="btn primary" id="btn-install-update-set" style="display:none">Install &amp; Restart</button>
+            </div>
+          </div>
+        </div>
+        <details class="card details">
+          <summary>Advanced — custom update feed</summary>
+          <div class="details-body">
+          <div class="set-row col">
+            <div class="set-title">Update feed URL</div>
+            <div class="set-desc">Host the release files (latest.yml + Setup exe) on any web server or GitHub Pages and paste the folder URL here.</div>
+            <div class="feed-row">
+              <input type="text" id="set-feed-url" class="input" placeholder="https://your-site.com/rendr-updates/" />
+              <button class="btn outline" id="set-feed-save">Save</button>
+            </div>
+          </div>
+          <div class="set-row col">
+            <div class="set-title">GitHub feed (alternative)</div>
+            <div class="set-desc">Point at a GitHub repo where releases are published with electron-builder.</div>
+            <div class="feed-row">
+              <input type="text" id="set-feed-owner" class="input" placeholder="owner (GitHub username or org)" />
+              <span class="muted">/</span>
+              <input type="text" id="set-feed-repo" class="input" placeholder="repo name" />
+            </div>
+          </div>
+          </div>
+        </details>
+      </section>
+
+      <section class="page" id="page-settings-data" data-page="settings-data">
+        <div class="page-head">
+          <h1>Data</h1>
+          <p class="sub">Everything Rendr stores lives in a local folder as JSON.</p>
+        </div>
+        <div class="panel card">
+          <div class="set-row">
+            <div>
+              <div class="set-title">App data folder</div>
+              <div class="set-desc" id="data-dir-path">—</div>
+            </div>
+            <button class="btn ghost" id="btn-open-data">Open</button>
+          </div>
+          <div class="set-row">
+            <div><div class="set-title">Reset everything</div><div class="set-desc">Restore default settings, crosshairs and flags.</div></div>
+            <button class="btn ghost danger-text" id="btn-reset-app">Reset</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="modal-root"></div>
+  <div id="toast-root"></div>
+
+  <script src="../shared/engine.js"></script>
+  <script src="../shared/presets.js"></script>
+  <script src="../shared/fflags-library.js"></script>
+  <script src="../shared/changelog.js"></script>
+  <script src="app.js"></script>
+  <script src="tabs/home.js"></script>
+  <script src="tabs/crosshair.js"></script>
+  <script src="tabs/fflags.js"></script>
+  <script src="tabs/settings.js"></script>
+</body>
+</html>

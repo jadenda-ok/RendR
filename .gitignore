@@ -1,0 +1,6 @@
+node_modules/
+release/
+release2/
+dist/
+vibe_images/
+*.log
