@@ -1,4 +1,4 @@
-# rendr
+# Rendr
 
 A crosshair overlay studio + FastFlags manager for Roblox. Design unlimited custom
 crosshairs (cross, dot, ring, T, box, custom images — with outlines, glow, rainbow and
