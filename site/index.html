@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rendr — The all-in-one Roblox companion</title>
+  <meta name="description" content="Rendr is the all-in-one Roblox companion: crosshair overlay studio, real-time FPS indicator and FastFlags manager. 100% local, no accounts, no injection.">
+  <meta property="og:title" content="Rendr — The all-in-one Roblox companion">
+  <meta property="og:description" content="Crosshair overlay studio, real-time FPS indicator and FastFlags manager for Roblox. Free, open source, fully local.">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="#top">
+        <img src="logo.png" class="invert" alt="Rendr logo">
+        <span class="brand-name">rendr</span>
+      </a>
+      <nav class="links">
+        <a href="#features">Features</a>
+        <a href="#how">How it works</a>
+        <a href="#faq">FAQ</a>
+        <a href="https://github.com/jadenda-ok/RendR" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+      <a class="btn btn-small" id="nav-download" href="https://github.com/jadenda-ok/RendR/releases/latest/download/rendr-setup.exe">Download</a>
+    </div>
+  </header>
+
+  <section class="hero" id="top">
+    <div class="hero-glow"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <div class="pill"><span class="pill-dot"></span><span id="pill-version">v1.1.0</span> · Windows x64 · Free</div>
+        <h1>Your Roblox.<br>Your <span class="accent">rules.</span></h1>
+        <p class="lead">
+          Design unlimited crosshairs, track your real in-game FPS, and tune
+          FastFlags — all in one black &amp; white window. Fully local.
+          No accounts. Nothing leaves your PC.
+        </p>
+        <div class="cta-row">
+          <a class="btn btn-big" id="hero-download" href="https://github.com/jadenda-ok/RendR/releases/latest/download/rendr-setup.exe">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download for Windows
+          </a>
+          <a class="btn btn-ghost" href="https://github.com/jadenda-ok/RendR" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2.17c-3.2.7-3.87-1.37-3.87-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.41-2.69 5.38-5.26 5.66.41.36.78 1.06.78 2.14v3.17c0 .31.2.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5z"/></svg>
+            View source
+          </a>
+        </div>
+        <p class="fine">Windows 10/11 · Open source (MIT) · <a id="portable-link" href="https://github.com/jadenda-ok/RendR/releases/latest/download/Rendr-Portable-1.1.0.exe">Portable build</a> — no install needed</p>
+      </div>
+
+      <div class="hero-visual">
+        <div class="mock">
+          <div class="mock-bar">
+            <span class="mdot"></span><span class="mdot"></span><span class="mdot"></span>
+            <span class="mock-title">Rendr — Crosshair Studio</span>
+          </div>
+          <div class="mock-body">
+            <aside class="mock-side">
+              <div class="mock-brand"><img src="logo.png" class="invert" alt=""><b>rendr</b></div>
+              <div class="mock-nav"><span class="on">Overview</span><span>Crosshair</span><span>FastFlags</span><span>Settings</span></div>
+              <div class="mock-nav2"><span>Resources</span><span>Changelog</span><span>Report a bug</span></div>
+            </aside>
+            <main class="mock-main">
+              <div class="mock-tabs"><span class="on">Studio</span><span>Presets</span><span>Profiles</span></div>
+              <div class="mock-stage">
+                <div class="cross">
+                  <i class="ring"></i>
+                  <i class="bar h"></i><i class="bar v"></i>
+                  <i class="mid"></i>
+                </div>
+                <div class="stage-label">Preview — live game scene</div>
+              </div>
+              <div class="mock-kpis">
+                <div class="kpi"><span class="kpi-label">FPS</span><b>120</b></div>
+                <div class="kpi"><span class="kpi-label">Crosshairs</span><b>4</b></div>
+                <div class="kpi"><span class="kpi-label">Flags</span><b>12</b></div>
+                <div class="kpi"><span class="kpi-label">Overlay</span><b class="ok">On</b></div>
+              </div>
+            </main>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="stat"><b>6</b><span>crosshair types</span></div>
+    <div class="stat"><b>12</b><span>built-in presets</span></div>
+    <div class="stat"><b>0</b><span>accounts needed</span></div>
+    <div class="stat"><b>100%</b><span>local &amp; private</span></div>
+  </section>
+
+  <section class="section" id="features">
+    <h2 class="sec-title">Everything you need. <span class="accent">Nothing you don't.</span></h2>
+    <p class="sec-sub">One window, three tools, zero bloat.</p>
+    <div class="grid">
+      <div class="card reveal">
+        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.9 5.7 3.9 9S14.5 18.4 12 21c-2.5-2.6-3.9-5.7-3.9-9S9.5 5.6 12 3z"/></svg></div>
+        <h3>Crosshair Studio</h3>
+        <p>Layer-based editor with a live preview on a real game scene. Cross, dot, ring, T-sight, box or your own image — with outlines, glow, rainbow mode and pulse/rotate animations.</p>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2-7 4 14 2-7h6"/></svg></div>
+        <h3>Real FPS indicator</h3>
+        <p>Your actual in-game FPS, live in the corner of the overlay. Captured with Intel PresentMon via ETW — no injection, no game-memory access, safe with Roblox anti-cheat.</p>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V8a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v13"/><path d="M2 21h20M9 8h2M9 12h2M9 16h2M15 8h2M15 12h2M15 16h2"/></svg></div>
+        <h3>FastFlags manager</h3>
+        <p>Curated flag library with search and categories, custom flags, bulk import, backup and restore — all through Roblox's own supported settings file. No hacks.</p>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 22h8M12 18v4"/></svg></div>
+        <h3>Click-through overlay</h3>
+        <p>Your crosshair renders above Roblox and never blocks your mouse or keyboard. Hotkey toggle, profile cycling, multi-monitor follow, auto-hide when Roblox closes.</p>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <h3>Profiles &amp; presets</h3>
+        <p>Create, duplicate and rename profiles. Import/export JSON, export PNG renders, and one-click built-in presets you can reuse forever.</p>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l7 4v6c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <h3>Local &amp; private</h3>
+        <p>No Roblox sign-in, no cloud, no telemetry. Settings and profiles live in a JSON file on your PC. The overlay is a separate window, not a game modification.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="how">
+    <h2 class="sec-title">Up and running in <span class="accent">three steps</span></h2>
+    <div class="steps">
+      <div class="step reveal">
+        <span class="step-num">1</span>
+        <h3>Download &amp; install</h3>
+        <p>Grab the installer, run it, launch Rendr. Windows SmartScreen may ask — choose More info → Run anyway (the app is unsigned).</p>
+      </div>
+      <div class="step reveal">
+        <span class="step-num">2</span>
+        <h3>Pick or design a crosshair</h3>
+        <p>Start from a preset or build your own in the studio. Tweak layers, colors, glow and animations with the live preview.</p>
+      </div>
+      <div class="step reveal">
+        <span class="step-num">3</span>
+        <h3>Play</h3>
+        <p>Launch Roblox — the overlay appears on top with your crosshair and real FPS. Toggle it anytime with a hotkey.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="faq">
+    <h2 class="sec-title">Questions, answered</h2>
+    <div class="faq">
+      <details class="reveal">
+        <summary>Is it safe with Roblox anti-cheat?</summary>
+        <p>Yes. The overlay is a separate transparent window, and FastFlags use Roblox's own ClientAppSettings.json. FPS capture uses Intel PresentMon (ETW) — no injection, no game-memory access.</p>
+      </details>
+      <details class="reveal">
+        <summary>Is it free?</summary>
+        <p>Completely. Rendr is open source under the MIT license. No premium tier, no ads, no telemetry.</p>
+      </details>
+      <details class="reveal">
+        <summary>Why does the FPS indicator ask for admin approval?</summary>
+        <p>Reading frame-present timestamps requires one Windows permission prompt per Roblox session. PresentMon restarts itself elevated, reads the data, and exits when Roblox closes.</p>
+      </details>
+      <details class="reveal">
+        <summary>Is this affiliated with Roblox?</summary>
+        <p>No. Rendr is an unofficial community tool, not affiliated with or endorsed by Roblox Corporation.</p>
+      </details>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <h2>Make Roblox <span class="accent">yours.</span></h2>
+    <p>Free, open source, fully local. Takes less than a minute to set up.</p>
+    <a class="btn btn-big" id="footer-download" href="https://github.com/jadenda-ok/RendR/releases/latest/download/rendr-setup.exe">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Download rendr-setup.exe
+    </a>
+    <p class="fine" id="footer-version">Latest release: v1.1.0</p>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="logo.png" class="invert" alt="">
+        <b>rendr</b>
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/jadenda-ok/RendR" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://github.com/jadenda-ok/RendR/releases" target="_blank" rel="noopener">Releases</a>
+        <a href="https://github.com/jadenda-ok/RendR#readme" target="_blank" rel="noopener">Documentation</a>
+        <a href="https://github.com/jadenda-ok/RendR/blob/main/LICENSE" target="_blank" rel="noopener">MIT License</a>
+      </div>
+      <p class="fine">Unofficial community tool. Not affiliated with Roblox Corporation.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

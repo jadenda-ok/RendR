@@ -1,5 +1,7 @@
 # rendr
 
+Website: https://jadenda-ok.github.io/RendR/ · Downloads: https://github.com/jadenda-ok/RendR/releases
+
 A crosshair overlay studio + FastFlags manager for Roblox. Design unlimited custom
 crosshairs (cross, dot, ring, T, box, custom images — with outlines, glow, rainbow and
 pulse/rotate animations), render them as a click-through overlay on top of Roblox, and

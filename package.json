@@ -78,7 +78,11 @@
         "provider": "github",
         "owner": "jadenda-ok",
         "repo": "RendR",
-        "releaseType": "release"
+        "releaseType": "release",
+        "releaseInfo": {
+          "releaseName": "Rendr v${version}",
+          "releaseNotesFile": "CHANGELOG.md"
+        }
       }
     ]
   }

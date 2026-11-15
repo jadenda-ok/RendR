@@ -26,5 +26,5 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           npx electron-builder --win nsis --publish always
-          npx electron-builder --win portable
+          npx electron-builder --win portable --publish never
           gh release upload ${{ github.ref_name }} release/Rendr-Portable-*.exe --clobber

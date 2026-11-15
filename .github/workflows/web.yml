@@ -1,0 +1,92 @@
+name: Website
+
+on:
+  push:
+    tags:
+      - 'site-*'
+
+permissions:
+  contents: write
+  pages: write
+
+jobs:
+  deploy:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Rebuild v1.1.0 release (delete + fresh republish)
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          REL_ID=$(curl -s https://api.github.com/repos/jadenda-ok/RendR/releases/tags/v1.1.0 | grep -o '"id": [0-9]*' | head -1 | grep -o '[0-9]*' || true)
+          if [ -n "$REL_ID" ]; then
+            curl -s -X DELETE -H "Authorization: token $GH_TOKEN" "https://api.github.com/repos/jadenda-ok/RendR/releases/$REL_ID" -o /dev/null
+          fi
+          npx electron-builder --win nsis --publish always
+          npx electron-builder --win portable --publish never
+          gh release upload v1.1.0 release/Rendr-Portable-*.exe --clobber
+
+      - name: Finalize release notes
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          (async () => {
+            const md = fs.readFileSync('CHANGELOG.md', 'utf8');
+            const sec = md.match(/## \[1\.1\.0\][\s\S]*?(?=\n## |$)/);
+            const body = sec ? sec[0].replace(/^## \[1\.1\.0\][^\n]*\n/, '').trim() : 'Rendr v1.1.0';
+            const h = { Authorization: 'token ' + process.env.GH_TOKEN, 'User-Agent': 'rendr-ci', Accept: 'application/vnd.github+json' };
+            const rel = await fetch('https://api.github.com/repos/jadenda-ok/RendR/releases/tags/v1.1.0', { headers: h }).then(r => r.json());
+            if (!rel.id) throw new Error('release not found');
+            const res = await fetch('https://api.github.com/repos/jadenda-ok/RendR/releases/' + rel.id, {
+              method: 'PATCH',
+              headers: h,
+              body: JSON.stringify({ name: 'Rendr v1.1.0', body })
+            });
+            console.log('notes patch:', res.status);
+          })().catch(e => { console.error(e); process.exit(1); });
+          NODE
+
+      - name: Deploy site to gh-pages
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd site
+          git init -b gh-pages
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Deploy Rendr website"
+          git push -f "https://x-access-token:${GH_TOKEN}@github.com/jadenda-ok/RendR.git" gh-pages
+
+      - name: Enable GitHub Pages
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          curl -s -X PUT -H "Authorization: token $GH_TOKEN" -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/jadenda-ok/RendR/pages \
+            -d '{"source":{"branch":"gh-pages","path":"/"}}' | head -c 400
+
+      - name: Wait for Pages build
+        shell: bash
+        run: |
+          for i in $(seq 1 24); do
+            ST=$(curl -s https://api.github.com/repos/jadenda-ok/RendR/pages | grep -o '"status": "[^"]*"' | head -1)
+            echo "pages $ST"
+            echo "$ST" | grep -q 'built' && exit 0
+            sleep 15
+          done
+          exit 1
